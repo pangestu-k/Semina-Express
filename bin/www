@@ -8,6 +8,7 @@ const app = require("../app");
 const debug = require("debug")("server-semina:server");
 const http = require("http");
 
+// inisialisasi db
 const db = require("../app/db");
 
 /**
