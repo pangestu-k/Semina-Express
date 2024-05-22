@@ -8,6 +8,10 @@ const app = express();
 // router
 const categoriesRouter = require("./app/api/v1/categories/router");
 
+// middleware
+const notFoundMiddleware = require("./app/middlewares/not-found");
+const handleErrorMiddleware = require("./app/middlewares/handler-error");
+
 // versioning
 const v1 = "/api/v1/cms";
 
@@ -19,5 +23,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //? api
 app.use(v1, categoriesRouter);
+
+app.use(notFoundMiddleware);
+app.use(handleErrorMiddleware);
 
 module.exports = app;

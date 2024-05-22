@@ -1,23 +1,23 @@
 const Categories = require("./model");
 const mongoose = require("mongoose");
+const {
+  getALlCategories,
+  createCategories,
+  getOneCategories,
+  updateCategories,
+  deleteCategries,
+} = require("../../../services/mongoose/categories");
+const { StatusCodes } = require("http-status-codes");
 
 //? create
 const create = async (req, res, next) => {
   try {
     const { name } = req.body;
 
-    if (!name) {
-      res.status(400).json({
-        status: "fail",
-        message: "Gagal menambahkan kategori. Nama kategori harus diisi",
-      });
-    }
+    const result = await createCategories(req);
 
-    const result = await Categories.create({ name });
-
-    res.status(201).json({
-      status: "success",
-      result: result,
+    res.status(StatusCodes.Created).json({
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -27,11 +27,10 @@ const create = async (req, res, next) => {
 //? get
 const index = async (req, res, next) => {
   try {
-    const result = await Categories.find();
+    const result = await getALlCategories();
 
-    res.status(201).json({
-      status: "success",
-      result: result,
+    res.status(StatusCodes.OK).json({
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -43,25 +42,10 @@ const find = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).json({
-        status: "fail",
-        message: "format id tidak valid",
-      });
-    }
+    const result = await getOneCategories(req);
 
-    const result = await Categories.findOne({ _id: id });
-
-    if (!result) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Kategori tidak ditemukan",
-      });
-    }
-
-    res.status(201).json({
-      status: "success",
-      result: result,
+    res.status(StatusCodes.OK).json({
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -71,32 +55,10 @@ const find = async (req, res, next) => {
 //? update
 const update = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { name } = req.body;
+    const result = await updateCategories(req);
 
-    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).json({
-        status: "fail",
-        message: "format id tidak valid",
-      });
-    }
-
-    const result = await Categories.findOneAndUpdate(
-      { _id: id },
-      { name },
-      { new: true, runValidators: true }
-    );
-
-    if (!result) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Kategori tidak ditemukan",
-      });
-    }
-
-    res.status(201).json({
-      status: "success",
-      result: result,
+    res.status(StatusCodes.OK).json({
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -106,23 +68,7 @@ const update = async (req, res, next) => {
 //? delete
 const destroy = async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).json({
-        status: "fail",
-        message: "format id tidak valid",
-      });
-    }
-
-    const result = await Categories.findOneAndDelete({ _id: id });
-
-    if (!result) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Kategori tidak ditemukan",
-      });
-    }
+    const result = await deleteCategries(req);
 
     res.status(200).json({
       status: "success",
