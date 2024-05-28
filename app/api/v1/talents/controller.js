@@ -1,10 +1,10 @@
 const {
-  createEvents,
-  getOneEvents,
-  updateEvents,
-  deleteEvents,
-  getAllEvents,
-} = require("../../../services/mongoose/events");
+  createTalents,
+  getOneTalents,
+  updateTalents,
+  deleteTalents,
+  getAllTalents,
+} = require("../../../services/mongoose/talents");
 const { StatusCodes } = require("http-status-codes");
 
 //? create
@@ -12,7 +12,7 @@ const create = async (req, res, next) => {
   try {
     const { name } = req.body;
 
-    const result = await createEvents(req);
+    const result = await createTalents(req);
 
     res.status(StatusCodes.CREATED).json({
       data: result,
@@ -25,7 +25,7 @@ const create = async (req, res, next) => {
 //? get
 const index = async (req, res, next) => {
   try {
-    const result = await getAllEvents(req);
+    const result = await getAllTalents(req);
 
     res.status(StatusCodes.OK).json({
       data: result,
@@ -40,7 +40,7 @@ const find = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await getOneEvents(req);
+    const result = await getOneTalents(req);
 
     res.status(StatusCodes.OK).json({
       data: result,
@@ -53,7 +53,7 @@ const find = async (req, res, next) => {
 //? update
 const update = async (req, res, next) => {
   try {
-    const result = await updateEvents(req);
+    const result = await updateTalents(req);
 
     res.status(StatusCodes.OK).json({
       data: result,
@@ -66,7 +66,7 @@ const update = async (req, res, next) => {
 //? delete
 const destroy = async (req, res, next) => {
   try {
-    const result = await deleteEvents(req);
+    const result = await deleteTalents(req);
 
     res.status(200).json({
       status: "success",
