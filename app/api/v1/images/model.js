@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
-let categorySchema = new Schema(
+let imageSchema = Schema(
   {
     name: { type: String },
   },
   { timestamps: true }
 );
 
-module.exports = model("Image", categorySchema);
+module.exports = model("Image", imageSchema);

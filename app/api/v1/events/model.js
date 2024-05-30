@@ -1,33 +1,29 @@
 const mongoose = require("mongoose");
-const { model, Schema } = mongoose;
 
-let ticketCategoriesSchema = new Schema(
-  {
-    type: {
-      type: String,
-      required: [true, "Tipe Tiket Harus Diisi"],
-    },
-    price: {
-      type: Number,
-      default: 0,
-    },
-    stock: {
-      type: Number,
-      default: 0,
-    },
-    statusTicketCategories: {
-      type: Boolean,
-      enum: [true, false],
-      default: true,
-    },
-    expired: {
-      type: Date,
-    },
+const ticketCategoriesSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    required: [true, "Tipe tiket harus diisi"],
   },
-  { timestamps: true }
-);
+  price: {
+    type: Number,
+    default: 0,
+  },
+  stock: {
+    type: Number,
+    default: 0,
+  },
+  statusTicketCategories: {
+    type: Boolean,
+    enum: [true, false],
+    default: true,
+  },
+  expired: {
+    type: Date,
+  },
+});
 
-const EventSchema = new Schema(
+const EventSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -77,8 +73,13 @@ const EventSchema = new Schema(
       ref: "Talent",
       required: true,
     },
+    organizer: {
+      type: mongoose.Types.ObjectId,
+      ref: "Organizer",
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = model("Event", EventSchema);
+module.exports = mongoose.model("Event", EventSchema);
