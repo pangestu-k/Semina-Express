@@ -27,7 +27,7 @@ const create = async (req, res, next) => {
 //? get
 const index = async (req, res, next) => {
   try {
-    const result = await getALlCategories();
+    const result = await getALlCategories(req);
 
     res.status(StatusCodes.OK).json({
       data: result,

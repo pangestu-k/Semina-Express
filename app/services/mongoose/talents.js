@@ -66,7 +66,7 @@ const updateTalents = async (req) => {
   // check data
   const check = await Talents.findOne({
     name,
-    _id: id,
+    _id: { $ne: id },
   });
 
   if (check) throw new BadRequestError("Talent name duplikat");
