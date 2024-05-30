@@ -27,12 +27,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 //? api
-app.use(v1, categoriesRouter);
-app.use(v1, imagesRouter);
-app.use(v1, talentsRouter);
-app.use(v1, eventsRouter);
-app.use(v1, organizersRouter);
-app.use(v1, authCMSRouter);
+app.use(`${v1}/cms`, categoriesRouter);
+app.use(`${v1}/cms`, imagesRouter);
+app.use(`${v1}/cms`, talentsRouter);
+app.use(`${v1}/cms`, eventsRouter);
+app.use(`${v1}/cms`, organizersRouter);
+app.use(`${v1}/cms`, authCMSRouter);
 
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);
